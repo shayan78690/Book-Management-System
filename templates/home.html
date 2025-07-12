@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Beautiful Book Manager</title>
+    <meta name="description" content="A beautiful and responsive book management system">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>My Book Collection</h1>
+        
+        <form action="/" method="POST">
+            <div class="form-group">
+                <input type="text" name="title" placeholder="Enter book title" required>
+                <input type="text" name="author" placeholder="Enter author name" required>
+            </div>
+            <button type="submit">Add Book</button>
+        </form>
+        
+        <h2>Books Library</h2>
+        
+        <ul>
+            {% for book in books %}
+                <li>
+                    <div class="book-info">
+                        <div class="book-title">{{ book.title }}</div>
+                        <div class="book-author">by {{ book.author }}</div>
+                    </div>
+                    <div class="book-actions">
+                        <form action="/delete" method="POST" style="display:inline;">
+                            <input type="hidden" name="title" value="{{ book.title }}">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                        <form action="/update" method="POST" class="update-form">
+                            <input type="hidden" name="old_title" value="{{ book.title }}">
+                            <input type="text" name="new_title" placeholder="New title" required>
+                            <button type="submit" class="update-btn">Update</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
